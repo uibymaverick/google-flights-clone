@@ -3,7 +3,7 @@ import axios from 'axios';
 import './FlightResults.css';
 import FlightDetailsModal from './FlightDetailsModal';
 
-const RAPIDAPI_KEY = "e516e7fec8msh537df61908b22d6p186186jsnc684900de799";
+const RAPIDAPI_KEY = "e516e7fec8msh537df61908b22d6p186186jsnc684900de799"; // Replace with your actual RapidAPI key usually in the .env file
 
 const FlightResults = ({ flights, currentPage, totalPages, onPageChange, sessionId }) => {
     const [selectedFlight, setSelectedFlight] = useState(null);
