@@ -70,7 +70,35 @@
 
 .search-input-container {
   position: relative;
-  z-index: 2;
+  display: flex;
+  align-items: center;
+}
+
+.search-input-container input {
+  padding-right: 40px;
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.search-icon:hover {
+  transform: scale(1.1);
+}
+
+.search-icon:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .airport-dropdown {
@@ -100,7 +128,7 @@
 
 .loader {
   position: absolute;
-  right: 10px;
+  right: 40px;
   top: 50%;
   transform: translateY(-50%);
   width: 20px;

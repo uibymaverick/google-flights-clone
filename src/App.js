@@ -4,7 +4,7 @@ import './App.css';
 import SearchForm from './components/SearchForm';
 import FlightResults from './components/FlightResults';
 
-const RAPIDAPI_KEY = "e516e7fec8msh537df61908b22d6p186186jsnc684900de799";
+const RAPIDAPI_KEY = process.env.REACT_APP_RAPIDAPI_KEY;
 const ITEMS_PER_PAGE = 5; // Number of flights to show per page
 
 function App() {

@@ -15,6 +15,11 @@ const SearchForm = ({ onSearch }) => {
         currency: 'USD'
     });
 
+    const [searchInputs, setSearchInputs] = useState({
+        origin: '',
+        destination: ''
+    });
+
     const [airports, setAirports] = useState({
         origin: [],
         destination: []
@@ -25,7 +30,8 @@ const SearchForm = ({ onSearch }) => {
         destination: false
     });
 
-    const searchAirports = async (query, type) => {
+    const searchAirports = async (type) => {
+        const query = searchInputs[type];
         if (!query.trim()) {
             setAirports(prev => ({ ...prev, [type]: [] }));
             return;
@@ -48,7 +54,6 @@ const SearchForm = ({ onSearch }) => {
             };
 
             const response = await axios.request(options);
-            console.log(response.data);
             setAirports(prev => ({ ...prev, [type]: response.data.data || [] }));
         } catch (error) {
             console.error('Airport search error:', error);
@@ -65,7 +70,19 @@ const SearchForm = ({ onSearch }) => {
             [`${type}EntityId`]: airport.entityId,
             [`${type}SkyId`]: airport.skyId
         }));
+        setSearchInputs(prev => ({
+            ...prev,
+            [type]: `${airport?.presentation?.title} (${airport?.skyId})`
+        }));
         setAirports(prev => ({ ...prev, [type]: [] }));
+    };
+
+    const handleInputChange = (e, type) => {
+        const { value } = e.target;
+        setSearchInputs(prev => ({
+            ...prev,
+            [type]: value
+        }));
     };
 
     const handleSubmit = (e) => {
@@ -93,14 +110,19 @@ const SearchForm = ({ onSearch }) => {
                         <input
                             type="text"
                             id="origin"
-                            value={searchData.origin}
-                            onChange={(e) => {
-                                handleChange(e);
-                                searchAirports(e.target.value, 'origin');
-                            }}
+                            value={searchInputs.origin}
+                            onChange={(e) => handleInputChange(e, 'origin')}
                             placeholder="Search airport"
                             required
                         />
+                        <button
+                            type="button"
+                            className="search-icon"
+                            onClick={() => searchAirports('origin')}
+                            disabled={loading.origin}
+                        >
+                            🔍
+                        </button>
                         {loading.origin && <div className="loader"></div>}
                         {airports.origin.length > 0 && (
                             <ul className="airport-dropdown">
@@ -122,14 +144,19 @@ const SearchForm = ({ onSearch }) => {
                         <input
                             type="text"
                             id="destination"
-                            value={searchData.destination}
-                            onChange={(e) => {
-                                handleChange(e);
-                                searchAirports(e.target.value, 'destination');
-                            }}
+                            value={searchInputs.destination}
+                            onChange={(e) => handleInputChange(e, 'destination')}
                             placeholder="Search airport"
                             required
                         />
+                        <button
+                            type="button"
+                            className="search-icon"
+                            onClick={() => searchAirports('destination')}
+                            disabled={loading.destination}
+                        >
+                            🔍
+                        </button>
                         {loading.destination && <div className="loader"></div>}
                         {airports.destination.length > 0 && (
                             <ul className="airport-dropdown">
