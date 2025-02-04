@@ -2,8 +2,6 @@ import { useState } from 'react';
 import axios from 'axios';
 import './SearchForm.css';
 
-const RAPIDAPI_KEY = "e516e7fec8msh537df61908b22d6p186186jsnc684900de799";
-
 const SearchForm = ({ onSearch }) => {
     const [searchData, setSearchData] = useState({
         origin: '',
@@ -44,7 +42,7 @@ const SearchForm = ({ onSearch }) => {
                     locale: 'en-US'
                 },
                 headers: {
-                    'x-rapidapi-key': RAPIDAPI_KEY,
+                    'x-rapidapi-key': process.env.REACT_APP_RAPIDAPI_KEY,
                     'x-rapidapi-host': 'sky-scrapper.p.rapidapi.com'
                 }
             };
